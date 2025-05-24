@@ -1,0 +1,5 @@
+<a href="https://wa.me/?text=Hi,+I+want+to+try+the+FutureTech+demo!" target="_blank">
+  <button style="padding: 10px 20px; background-color: #25D366; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer;">
+    🤖 Try a Demo
+  </button>
+</a>

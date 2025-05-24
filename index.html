@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FutureTech | AI in Real Life</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0a0a0a;
+      color: #00ffcc;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #111;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #00ffcc33;
+    }
+
+    .typewriter {
+      font-size: 1.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #00ffcc;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards, blink 0.75s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    canvas#aiCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .intro {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: auto;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #00ffcc55;
+    }
+
+    .intro h2 {
+      font-size: 2rem;
+      color: #00ffcc;
+      margin-bottom: 1rem;
+    }
+
+    .intro p {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #00ffaa;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 1px solid #00ffcc33;
+      background: #111;
+    }
+  </style>
+</head>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/67fd1a1f345ce4191039d027/1ioqas3mu';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+<body>
+  <header>
+    <h1 class="typewriter">AI is the Future. The Future is Here.</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="concepts.html">Concepts</a></li>
+        <li><a href="demos.html">Demos</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <canvas id="aiCanvas"></canvas>
+      <div class="intro">
+        <h2>Explore how AI is reshaping our world</h2>
+        <p>Artificial Intelligence is revolutionizing every aspect of our lives—from healthcare to entertainment, education to cybersecurity. This platform is a gateway to experience AI in real life through concepts, demos, and real-world applications curated by a solo tech enthusiast.</p>
+        <a href="demos.html" class="btn">Try a Demo</a>
+      </div>
+    </section>
+
+    <section class="intro" style="margin-top: 3rem;">
+      <h2>Why This Project?</h2>
+      <p>This website is a college project aimed at showcasing how artificial intelligence is practically impacting industries. Created solo by a second-year computer engineering student of vdf, it merges creativity, programming, and real-world tech to demonstrate innovation and skill.</p>
+    </section>
+
+    <section class="intro" style="margin-top: 3rem;">
+      <h2>Highlights</h2>
+      <ul style="text-align: left; color: #99ffee; line-height: 1.8;">
+        <li>Dark theme futuristic UI</li>
+        <li>3D animated model using Three.js</li>
+        <li>Typewriter animation effect</li>
+        <li>Responsive layout across devices</li>
+        <li>Multi-page structure with detailed AI content</li>
+        <li>Ready to integrate chatbot and voice AI</li>
+      </ul>
+    </section>
+
+    <section class="intro" style="margin-top: 3rem;">
+      <h2>Coming Soon</h2>
+      <p>⚡ Live AI Chatbot — trained to answer tech questions<br>🎤 Voice AI — ask and hear back in real-time<br>🚀 More demos and futuristic content updates!</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 FutureTech | Created by jagruti Londhe | aka J-Cipher</p>
+  </footer>
+
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("aiCanvas"), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const geometry = new THREE.IcosahedronGeometry(1, 1);
+    const material = new THREE.MeshStandardMaterial({ color: 0x00ffcc, flatShading: true });
+    const icosahedron = new THREE.Mesh(geometry, material);
+    scene.add(icosahedron);
+
+    const light = new THREE.PointLight(0xffffff, 1, 100);
+    light.position.set(5, 5, 5);
+    scene.add(light);
+
+    camera.position.z = 4;
+    function animate() {
+      requestAnimationFrame(animate);
+      icosahedron.rotation.x += 0.005;
+      icosahedron.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

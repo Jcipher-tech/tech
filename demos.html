@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FutureTech | Demo</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: #0d0d0d;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #00ffff;
+    }
+    p {
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 15px;
+      padding: 30px;
+      width: 280px;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card h3 {
+      color: #00ffff;
+      margin-bottom: 15px;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+    .coming-soon {
+      opacity: 0.6;
+      border: 2px dashed #555;
+    }
+    a.home-link {
+      display: inline-block;
+      margin-top: 40px;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    a.home-link:hover {
+      background: #00ffff;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI in Action 🚀</h1>
+    <p>Explore interactive cards showing how AI is reshaping the world around us. These are just glimpses of what’s possible!</p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Face Detection</h3>
+        <p>Real-time face detection using OpenCV. (Demo not available yet, but coming soon!)</p>
+      </div>
+      <div class="card">
+        <h3>AI Text Generator</h3>
+        <p>See how GPT-style AI can generate poems, codes, or even chat with you.</p>
+      </div>
+      <div class="card">
+        <h3>Image Recognition</h3>
+        <p>Feed an image and let AI guess what it is using pretrained models.</p>
+      </div>
+      <div class="card coming-soon">
+        <h3>AI Voice Assistant</h3>
+        <p>Coming soon! Talk to your browser like J.A.R.V.I.S.</p>
+      </div>
+    </div>
+
+    <a href="index.html" class="home-link">← Back to Home</a>
+  </div>
+</body>
+</html>
