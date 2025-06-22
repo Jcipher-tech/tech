@@ -7,7 +7,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
@@ -15,7 +20,6 @@
       color: #00ffcc;
       overflow-x: hidden;
     }
-
     header {
       background: #111;
       padding: 1rem 2rem;
@@ -24,7 +28,6 @@
       align-items: center;
       border-bottom: 1px solid #00ffcc33;
     }
-
     .typewriter {
       font-size: 1.5rem;
       white-space: nowrap;
@@ -33,32 +36,26 @@
       width: 0;
       animation: typing 4s steps(40, end) forwards, blink 0.75s infinite;
     }
-
     @keyframes typing {
       from { width: 0; }
       to { width: 100%; }
     }
-
     @keyframes blink {
       50% { border-color: transparent; }
     }
-
     nav ul {
       list-style: none;
       display: flex;
       gap: 1.5rem;
     }
-
     nav a {
       color: #00ffcc;
       text-decoration: none;
       font-weight: bold;
     }
-
     nav a:hover {
       color: #fff;
     }
-
     .hero {
       position: relative;
       height: 100vh;
@@ -68,7 +65,6 @@
       text-align: center;
       padding: 0 2rem;
     }
-
     canvas#aiCanvas {
       position: absolute;
       top: 0;
@@ -77,7 +73,6 @@
       height: 100%;
       z-index: 0;
     }
-
     .intro {
       position: relative;
       z-index: 1;
@@ -88,19 +83,16 @@
       border-radius: 20px;
       box-shadow: 0 0 30px #00ffcc55;
     }
-
     .intro h2 {
       font-size: 2rem;
       color: #00ffcc;
       margin-bottom: 1rem;
     }
-
     .intro p {
       font-size: 1.1rem;
       color: #ccc;
       margin-bottom: 1.5rem;
     }
-
     .btn {
       display: inline-block;
       padding: 0.75rem 1.5rem;
@@ -111,86 +103,79 @@
       text-decoration: none;
       transition: background 0.3s;
     }
-
     .btn:hover {
       background: #00ffaa;
     }
-
     footer {
       text-align: center;
       padding: 1rem;
       border-top: 1px solid #00ffcc33;
       background: #111;
     }
-
+    .news-ticker {
+      background: #111;
+      padding: 10px;
+      border-bottom: 1px solid #00ffcc44;
+      font-weight: bold;
+      color: #00ffff;
+    }
     #newsList li a:hover {
       color: #ffffff;
       text-decoration: underline;
     }
   </style>
 </head>
-
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/67fd1a1f345ce4191039d027/1ioqas3mu';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
-
 <body>
+  <div class="news-ticker">
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+      📰 Welcome to FutureTech | 🌐 Latest AI breakthroughs are shaping industries | 💡 Explore Demos | 🧠 Powered by GPT & GNews
+    </marquee>
+  </div>
+
   <header>
     <h1 class="typewriter">AI is the Future. The Future is Here.</h1>
     <nav>
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="concepts.html">Concepts</a></li>
-        <li><a href="demos.html">Demos</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#why">Why</a></li>
+        <li><a href="#demos">Demos</a></li>
+        <li><a href="#news">News</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" data-aos="zoom-in">
       <canvas id="aiCanvas"></canvas>
       <div class="intro">
         <h2>Explore how AI is reshaping our world</h2>
-        <p>Artificial Intelligence is revolutionizing every aspect of our lives—from healthcare to entertainment, education to cybersecurity. This platform is a gateway to experience AI in real life through concepts, demos, and real-world applications curated by a solo tech enthusiast.</p>
-        <a href="demos.html" class="btn">Try a Demo</a>
+        <p>Artificial Intelligence is revolutionizing every aspect of our lives—from healthcare to entertainment, education to cybersecurity.</p>
+        <a href="#demos" class="btn">Try a Demo</a>
       </div>
     </section>
 
-    <section class="intro" style="margin-top: 3rem;">
+    <section id="why" class="intro" data-aos="fade-up">
       <h2>Why This Project?</h2>
-      <p>This website is a college project aimed at showcasing how artificial intelligence is practically impacting industries. Created solo by a second-year computer engineering student of VDF, it merges creativity, programming, and real-world tech to demonstrate innovation and skill.</p>
+      <p>This college project showcases how AI is practically impacting industries. Created solo by a second-year engineering student of VDF.</p>
     </section>
 
-    <section class="intro" style="margin-top: 3rem;">
+    <section class="intro" data-aos="fade-up" data-aos-delay="100">
       <h2>Highlights</h2>
       <ul style="text-align: left; color: #99ffee; line-height: 1.8;">
         <li>Dark theme futuristic UI</li>
         <li>3D animated model using Three.js</li>
         <li>Typewriter animation effect</li>
-        <li>Responsive layout across devices</li>
-        <li>Multi-page structure with detailed AI content</li>
-        <li>Ready to integrate chatbot and voice AI</li>
+        <li>Responsive layout</li>
+        <li>Voice AI & chatbot ready</li>
       </ul>
     </section>
 
-    <section class="intro" style="margin-top: 3rem;">
+    <section class="intro" data-aos="fade-up" data-aos-delay="200">
       <h2>Coming Soon</h2>
-      <p>⚡ Live AI Chatbot — trained to answer tech questions<br>🎤 Voice AI — ask and hear back in real-time<br>🚀 More demos and futuristic content updates!</p>
+      <p>⚡ Live AI Chatbot<br>🎤 Voice AI<br>🚀 More futuristic demos</p>
     </section>
 
-    <!-- 📰 Latest Tech News Section -->
-    <section class="intro" style="margin-top: 3rem;">
+    <section id="news" class="intro" data-aos="fade-up" data-aos-delay="300">
       <h2>📰 Latest Technology News</h2>
       <ul id="newsList" style="list-style: none; padding-left: 0; color: #99ffee; margin-top: 1rem;">
         <li>Loading latest headlines...</li>
@@ -203,23 +188,19 @@ s0.parentNode.insertBefore(s1,s0);
   </footer>
 
   <script>
-    // 3D Animation Background
+    AOS.init();
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("aiCanvas"), alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-
     const geometry = new THREE.IcosahedronGeometry(1, 1);
     const material = new THREE.MeshStandardMaterial({ color: 0x00ffcc, flatShading: true });
     const icosahedron = new THREE.Mesh(geometry, material);
     scene.add(icosahedron);
-
     const light = new THREE.PointLight(0xffffff, 1, 100);
     light.position.set(5, 5, 5);
     scene.add(light);
-
     camera.position.z = 4;
-
     function animate() {
       requestAnimationFrame(animate);
       icosahedron.rotation.x += 0.005;
@@ -228,34 +209,20 @@ s0.parentNode.insertBefore(s1,s0);
     }
     animate();
 
-    // 📰 Styled Tech News Section
     async function loadTechNews() {
       const apiKey = '11e6ec8aba301eb42e103c326c8885ad';
       const url = `https://gnews.io/api/v4/top-headlines?lang=en&topic=technology&max=6&apikey=${apiKey}`;
-
       const list = document.getElementById("newsList");
       list.innerHTML = "<li>Loading news...</li>";
-
       try {
         const res = await fetch(url);
         const data = await res.json();
         list.innerHTML = "";
-
         data.articles.forEach(article => {
           const li = document.createElement("li");
-          li.style = `
-            background: #141414;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
-            border-left: 4px solid #00ffff;
-            transition: transform 0.3s ease;
-            list-style: none;
-          `;
+          li.style = `background: #141414; margin-bottom: 20px; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0, 255, 255, 0.15); border-left: 4px solid #00ffff; transition: transform 0.3s ease; list-style: none;`;
           li.onmouseover = () => li.style.transform = "scale(1.02)";
           li.onmouseout = () => li.style.transform = "scale(1)";
-
           li.innerHTML = `
             <a href="${article.url}" target="_blank" style="font-size: 1.2rem; font-weight: bold; color: #00ffff; text-decoration: none;">
               📰 ${article.title}
@@ -271,7 +238,6 @@ s0.parentNode.insertBefore(s1,s0);
         list.innerHTML = "<li style='color:#f66;'>⚠️ Could not load news. Try again later.</li>";
       }
     }
-
     window.addEventListener("DOMContentLoaded", loadTechNews);
   </script>
 </body>
