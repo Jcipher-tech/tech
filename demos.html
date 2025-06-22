@@ -114,4 +114,107 @@
       <div class="card">
         <h3>🖼️ Image Recognition</h3>
         <input type="file" accept="image/*" onchange="recognizeImage(event)" />
-        <img
+        <img id="inputImage" />
+        <p id="imageResult" style="margin-top:1rem; color:#99ffee;"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // AI Text Generator using distilgpt2
+    async function generateText() {
+      const prompt = document.getElementById("userPrompt").value;
+      document.getElementById("outputText").innerText = "Generating...";
+
+      const response = await fetch("https://api-inference.huggingface.co/models/distilgpt2", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer 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"
+        },
+        body: JSON.stringify({ inputs: prompt })
+      });
+
+      try {
+        const data = await response.json();
+        document.getElementById("outputText").innerText =
+          data[0]?.generated_text || "The model is still warming up. Please try again.";
+      } catch (err) {
+        document.getElementById("outputText").innerText = "An error occurred. Please try again.";
+      }
+    }
+
+    // Face Detection (fixed version)
+    async function startFace() {
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('overlay');
+      const displaySize = { width: 320, height: 240 };
+
+      await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+      await faceapi.nets.faceExpressionNet.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+
+      navigator.mediaDevices.getUserMedia({ video: {} }).then(stream => {
+        video.srcObject = stream;
+      });
+
+      video.addEventListener('play', () => {
+        canvas.width = displaySize.width;
+        canvas.height = displaySize.height;
+
+        setInterval(async () => {
+          const detections = await faceapi
+            .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceExpressions();
+
+          const resized = faceapi.resizeResults(detections, displaySize);
+          const ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          faceapi.draw.drawDetections(canvas, resized);
+          faceapi.draw.drawFaceLandmarks(canvas, resized);
+          faceapi.draw.drawFaceExpressions(canvas, resized);
+        }, 200);
+      });
+    }
+
+    // Voice Recognition
+    function startSpeech() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      document.getElementById("voiceText").innerText = "🎤 Listening...";
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById("voiceText").innerText = transcript;
+        document.getElementById("userPrompt").value = transcript;
+      };
+
+      recognition.onerror = function(event) {
+        document.getElementById("voiceText").innerText = "⚠️ Error: " + event.error;
+      };
+
+      recognition.onend = function() {
+        console.log("Speech recognition ended");
+      };
+
+      recognition.start();
+    }
+
+    // Image Recognition
+    async function recognizeImage(event) {
+      const imageElement = document.getElementById("inputImage");
+      imageElement.src = URL.createObjectURL(event.target.files[0]);
+
+      const model = await mobilenet.load();
+      const predictions = await model.classify(imageElement);
+      document.getElementById("imageResult").innerText =
+        predictions.map(p => `${p.className} (${(p.probability * 100).toFixed(1)}%)`).join(", ");
+    }
+  </script>
+</body>
+</html>
