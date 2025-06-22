@@ -122,6 +122,11 @@
       border-top: 1px solid #00ffcc33;
       background: #111;
     }
+
+    #newsList li a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -164,7 +169,7 @@ s0.parentNode.insertBefore(s1,s0);
 
     <section class="intro" style="margin-top: 3rem;">
       <h2>Why This Project?</h2>
-      <p>This website is a college project aimed at showcasing how artificial intelligence is practically impacting industries. Created solo by a second-year computer engineering student of vdf, it merges creativity, programming, and real-world tech to demonstrate innovation and skill.</p>
+      <p>This website is a college project aimed at showcasing how artificial intelligence is practically impacting industries. Created solo by a second-year computer engineering student of VDF, it merges creativity, programming, and real-world tech to demonstrate innovation and skill.</p>
     </section>
 
     <section class="intro" style="margin-top: 3rem;">
@@ -223,10 +228,10 @@ s0.parentNode.insertBefore(s1,s0);
     }
     animate();
 
-    // 📰 Auto-Load Technology News using GNews.io
+    // 📰 Styled Tech News Section
     async function loadTechNews() {
       const apiKey = '11e6ec8aba301eb42e103c326c8885ad';
-      const url = `https://gnews.io/api/v4/top-headlines?lang=en&topic=technology&country=in&max=6&apikey=${apiKey}`;
+      const url = `https://gnews.io/api/v4/top-headlines?lang=en&topic=technology&max=6&apikey=${apiKey}`;
 
       const list = document.getElementById("newsList");
       list.innerHTML = "<li>Loading news...</li>";
@@ -238,12 +243,32 @@ s0.parentNode.insertBefore(s1,s0);
 
         data.articles.forEach(article => {
           const li = document.createElement("li");
-          li.style = "margin-bottom: 15px; background:#0d0d0d; padding:15px; border-radius:10px;";
-          li.innerHTML = `<a href="${article.url}" target="_blank" style="color:#00ffff; text-decoration:none;">${article.title}</a>`;
+          li.style = `
+            background: #141414;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+            border-left: 4px solid #00ffff;
+            transition: transform 0.3s ease;
+            list-style: none;
+          `;
+          li.onmouseover = () => li.style.transform = "scale(1.02)";
+          li.onmouseout = () => li.style.transform = "scale(1)";
+
+          li.innerHTML = `
+            <a href="${article.url}" target="_blank" style="font-size: 1.2rem; font-weight: bold; color: #00ffff; text-decoration: none;">
+              📰 ${article.title}
+            </a>
+            <p style="margin-top: 8px; color: #bbb; font-size: 0.9rem;">
+              🌐 ${article.source.name} &nbsp;|&nbsp;
+              🕒 ${new Date(article.publishedAt).toLocaleString()}
+            </p>
+          `;
           list.appendChild(li);
         });
       } catch (error) {
-        list.innerHTML = "<li>⚠️ Could not load news. Try again later.</li>";
+        list.innerHTML = "<li style='color:#f66;'>⚠️ Could not load news. Try again later.</li>";
       }
     }
 
