@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FutureTech | Tech News</title>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+      color: #00ffff;
+      font-size: 2.5rem;
+    }
+    #newsList {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0;
+      list-style: none;
+    }
+    #newsList li {
+      margin-bottom: 20px;
+      background: #1a1a1a;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #003333;
+    }
+    #newsList li a {
+      color: #00ffff;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+    .btn {
+      display: block;
+      margin: 20px auto;
+      background: #00ffff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #00cccc;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .back-link a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📰 FutureTech: Latest Technology News</h1>
+  <button class="btn" onclick="loadTechNews()">Load News</button>
+  <ul id="newsList">
+    <li>Click the button to see the latest tech headlines...</li>
+  </ul>
+
+  <div class="back-link">
+    <a href="demos.html">← Back to Demos</a>
+  </div>
+
+  <script>
+    async function loadTechNews() {
+      const apiKey = '189d06a259eb478f82f2bde7519badc6';
+      const url = `https://newsapi.org/v2/top-headlines?category=technology&country=in&pageSize=10&apiKey=${apiKey}`;
+      
+      const list = document.getElementById("newsList");
+      list.innerHTML = "<li>Loading news...</li>";
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        list.innerHTML = "";
+
+        data.articles.forEach(article => {
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+          list.appendChild(li);
+        });
+      } catch (error) {
+        list.innerHTML = "<li>⚠️ Could not load news. Try again later.</li>";
+      }
+    }
+  </script>
+</body>
+</html>
