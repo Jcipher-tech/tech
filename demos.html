@@ -91,6 +91,7 @@
         <h3>🧠 AI Text Generator</h3>
         <textarea id="userPrompt" rows="4" placeholder="Type your idea or topic here..."></textarea>
         <button onclick="generateText()" class="btn">Generate</button>
+        <button onclick="startSpeech()" class="btn" style="margin-left: 10px;">🎤 Speak</button>
         <p id="outputText" style="margin-top:1rem; color:#99ffee;">Your AI-generated text will appear here...</p>
       </div>
 
@@ -102,7 +103,7 @@
         <canvas id="overlay"></canvas>
       </div>
 
-      <!-- Voice Recognition -->
+      <!-- Voice to Text -->
       <div class="card">
         <h3>🎤 Voice to Text</h3>
         <button onclick="startSpeech()" class="btn">Start Speaking</button>
@@ -120,12 +121,12 @@
   </div>
 
   <script>
-    // AI Text Generator
+    // AI Text Generator using distilgpt2
     async function generateText() {
       const prompt = document.getElementById("userPrompt").value;
       document.getElementById("outputText").innerText = "Generating...";
 
-      const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
+      const response = await fetch("https://api-inference.huggingface.co/models/distilgpt2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -134,8 +135,13 @@
         body: JSON.stringify({ inputs: prompt })
       });
 
-      const data = await response.json();
-      document.getElementById("outputText").innerText = data[0]?.generated_text || "No response. Try again.";
+      try {
+        const data = await response.json();
+        document.getElementById("outputText").innerText =
+          data[0]?.generated_text || "The model is still warming up. Please try again.";
+      } catch (err) {
+        document.getElementById("outputText").innerText = "An error occurred. Please try again.";
+      }
     }
 
     // Face Detection
@@ -165,10 +171,26 @@
     function startSpeech() {
       const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
       recognition.lang = 'en-US';
-      recognition.start();
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      document.getElementById("voiceText").innerText = "🎤 Listening...";
+
       recognition.onresult = function(event) {
-        document.getElementById("voiceText").innerText = event.results[0][0].transcript;
+        const transcript = event.results[0][0].transcript;
+        document.getElementById("voiceText").innerText = transcript;
+        document.getElementById("userPrompt").value = transcript; // Optional: feed into text box
       };
+
+      recognition.onerror = function(event) {
+        document.getElementById("voiceText").innerText = "⚠️ Error: " + event.error;
+      };
+
+      recognition.onend = function() {
+        console.log("Speech recognition ended");
+      };
+
+      recognition.start();
     }
 
     // Image Recognition
