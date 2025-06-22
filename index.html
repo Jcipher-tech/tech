@@ -183,13 +183,22 @@ s0.parentNode.insertBefore(s1,s0);
       <h2>Coming Soon</h2>
       <p>⚡ Live AI Chatbot — trained to answer tech questions<br>🎤 Voice AI — ask and hear back in real-time<br>🚀 More demos and futuristic content updates!</p>
     </section>
+
+    <!-- 📰 Latest Tech News Section -->
+    <section class="intro" style="margin-top: 3rem;">
+      <h2>📰 Latest Technology News</h2>
+      <ul id="newsList" style="list-style: none; padding-left: 0; color: #99ffee; margin-top: 1rem;">
+        <li>Loading latest headlines...</li>
+      </ul>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 FutureTech | Created by jagruti Londhe | aka J-Cipher</p>
+    <p>&copy; 2025 FutureTech | Created by Jagruti Londhe | aka J-Cipher</p>
   </footer>
 
   <script>
+    // 3D Animation Background
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("aiCanvas"), alpha: true });
@@ -205,6 +214,7 @@ s0.parentNode.insertBefore(s1,s0);
     scene.add(light);
 
     camera.position.z = 4;
+
     function animate() {
       requestAnimationFrame(animate);
       icosahedron.rotation.x += 0.005;
@@ -212,6 +222,32 @@ s0.parentNode.insertBefore(s1,s0);
       renderer.render(scene, camera);
     }
     animate();
+
+    // 📰 Auto-Load Technology News
+    async function loadTechNews() {
+      const apiKey = '189d06a259eb478f82f2bde7519badc6';
+      const url = `https://newsapi.org/v2/top-headlines?category=technology&country=in&pageSize=6&apiKey=${apiKey}`;
+
+      const list = document.getElementById("newsList");
+      list.innerHTML = "<li>Loading news...</li>";
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        list.innerHTML = "";
+
+        data.articles.forEach(article => {
+          const li = document.createElement("li");
+          li.style = "margin-bottom: 15px; background:#0d0d0d; padding:15px; border-radius:10px;";
+          li.innerHTML = `<a href="${article.url}" target="_blank" style="color:#00ffff; text-decoration:none;">${article.title}</a>`;
+          list.appendChild(li);
+        });
+      } catch (error) {
+        list.innerHTML = "<li>⚠️ Could not load news. Try again later.</li>";
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", loadTechNews);
   </script>
 </body>
 </html>
