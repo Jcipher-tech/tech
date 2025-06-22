@@ -223,10 +223,10 @@ s0.parentNode.insertBefore(s1,s0);
     }
     animate();
 
-    // 📰 Auto-Load Technology News
+    // 📰 Auto-Load Technology News using GNews.io
     async function loadTechNews() {
-      const apiKey = '189d06a259eb478f82f2bde7519badc6';
-      const url = `https://newsapi.org/v2/top-headlines?category=technology&country=in&pageSize=6&apiKey=${apiKey}`;
+      const apiKey = '11e6ec8aba301eb42e103c326c8885ad';
+      const url = `https://gnews.io/api/v4/top-headlines?lang=en&topic=technology&country=in&max=6&apikey=${apiKey}`;
 
       const list = document.getElementById("newsList");
       list.innerHTML = "<li>Loading news...</li>";
