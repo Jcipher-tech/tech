@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FutureTech | Tech News</title>
+
   <style>
     body {
       background: #0d0d0d;
@@ -12,17 +13,20 @@
       margin: 0;
       padding: 40px;
     }
+
     h1 {
       text-align: center;
       color: #00ffff;
       font-size: 2.5rem;
     }
+
     #newsList {
       max-width: 800px;
       margin: 2rem auto;
       padding: 0;
       list-style: none;
     }
+
     #newsList li {
       margin-bottom: 20px;
       background: #1a1a1a;
@@ -30,11 +34,13 @@
       border-radius: 10px;
       box-shadow: 0 0 10px #003333;
     }
+
     #newsList li a {
       color: #00ffff;
       text-decoration: none;
       font-size: 1.1rem;
     }
+
     .btn {
       display: block;
       margin: 20px auto;
@@ -46,13 +52,16 @@
       border-radius: 8px;
       cursor: pointer;
     }
+
     .btn:hover {
       background: #00cccc;
     }
+
     .back-link {
       text-align: center;
       margin-top: 30px;
     }
+
     .back-link a {
       color: #00ffff;
       text-decoration: none;
@@ -60,9 +69,13 @@
     }
   </style>
 </head>
+
 <body>
+
   <h1>📰 FutureTech: Latest Technology News</h1>
+
   <button class="btn" onclick="loadTechNews()">Load News</button>
+
   <ul id="newsList">
     <li>Click the button to see the latest tech headlines...</li>
   </ul>
@@ -73,26 +86,41 @@
 
   <script>
     async function loadTechNews() {
-      const apiKey = '189d06a259eb478f82f2bde7519badc6';
-      const url = `https://newsapi.org/v2/top-headlines?category=technology&country=in&pageSize=10&apiKey=${apiKey}`;
-      
       const list = document.getElementById("newsList");
       list.innerHTML = "<li>Loading news...</li>";
 
       try {
-        const res = await fetch(url);
-        const data = await res.json();
+        // Fetch top story IDs from Hacker News
+        const idsResponse = await fetch(
+          "https://hacker-news.firebaseio.com/v0/topstories.json"
+        );
+        const ids = await idsResponse.json();
+
         list.innerHTML = "";
 
-        data.articles.forEach(article => {
-          const li = document.createElement("li");
-          li.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
-          list.appendChild(li);
-        });
+        // Fetch details of first 10 stories
+        for (let i = 0; i < 10; i++) {
+          const storyResponse = await fetch(
+            `https://hacker-news.firebaseio.com/v0/item/${ids[i]}.json`
+          );
+          const story = await storyResponse.json();
+
+          if (story && story.title && story.url) {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <a href="${story.url}" target="_blank">
+                ${story.title}
+              </a>
+            `;
+            list.appendChild(li);
+          }
+        }
       } catch (error) {
-        list.innerHTML = "<li>⚠️ Could not load news. Try again later.</li>";
+        list.innerHTML =
+          "<li>⚠️ Could not load news. Please try again later.</li>";
       }
     }
   </script>
+
 </body>
 </html>
